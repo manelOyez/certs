@@ -43,4 +43,4 @@ workflows:
             branches:
               only: development
           requires:
-            - build-and-tes
+            - build-and-test
