@@ -13,14 +13,21 @@
 # Uncomment the line if you want fastlane to automatically update itself
 # update_fastlane
 
-default_platform(:ios)
+default_platform :ios
 
 platform :ios do
-   desc "Submit a new Beta Build to Apple TestFlight"
-  desc "This will also make sure the profile is up to date"
-  lane :beta do
-    # match(type: "appstore") # more information: https://codesigning.guide   
-    gym(scheme: "AwesomeProject") # Build your app - more options available
-    pilot
-end
+  before_all do
+    setup_circle_ci
+  end
+
+  desc "Runs all the tests"
+  lane :test do
+    scan
+  end
+
+  desc "Ad-hoc build"
+  lane :adhoc do
+    match(type: "adhoc")
+    gym(export_method: "ad-hoc")
+  end
 end 
